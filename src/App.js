@@ -1,25 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default class App extends React.Component{
+  state = {
+    patrimonies: ['1']
+  }
+
+  componentDidMount() {
+
+    axios.get(`http://localhost:8080/patrimonies/1`, {
+        method: 'GET'
+    })
+        .then(res => {
+          const patrimonies = res.data;
+
+          this.setState({patrimonies})
+            console.log(this.state)
+        })
+
+  }
+
+  render(){
+    return(
+        <div>
+            <h1>oi</h1>
+            <ul>
+                {console.log(this.state)}
+              {this.state.patrimonies.content.map(person => <li> {person.descricao}</li>)}
+            </ul>
+        </div>
+    )
+  }
+
 }
 
-export default App;
+
